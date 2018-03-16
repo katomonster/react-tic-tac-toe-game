@@ -34,6 +34,9 @@ class App extends Component {
 
   reset() {
     document.querySelector('.active').classList.remove('active');
+    document.querySelectorAll('.winner').forEach((winner) => {
+      winner.classList.remove('winner');
+    });
     this.setState({
       currentText: 'O',
       values: ['','','','','','','','',''],
@@ -61,6 +64,7 @@ class App extends Component {
   checkWinner(newValues) {
     let curXs = [];
     let curOs = [];
+    let winningPattern = '';
     newValues.forEach((e, i) => {
       if (e === 'X') curXs.push(i);
       else if(e === 'O') curOs.push(i);
@@ -72,11 +76,23 @@ class App extends Component {
     for (const str of this.winningPatterns) {
       if (curXstr.indexOf(str) > -1) {
         this.setState({winner: 'X'});
+        winningPattern = str;
         break;
       } else if (curOstr.indexOf(str) > -1) {
         this.setState({winner: 'O'});
+        winningPattern = str;
         break;
       }
+    }
+
+    if (winningPattern) {
+      const indices = new Set( winningPattern.split('') );
+      console.log(indices);
+      document.querySelectorAll('.container li').forEach((li, i) => {
+        if (indices.has(i.toString())) {
+          li.classList.add('winner');
+        }
+      });
     }
   }
 

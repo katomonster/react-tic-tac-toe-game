@@ -63,4 +63,8 @@ button {
 } 
 
 .active { background-color: yellow; }
+.winner {
+  background-color: orange;
+  color: #fff;
+}
 
