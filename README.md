@@ -2,4 +2,4 @@
 
 - Shows status at the top.
 
-* See it in action: react-tic-tac-toe-katomonster.surge.sh
+* See it in action: http://react-tic-tac-toe-katomonster.surge.sh/
