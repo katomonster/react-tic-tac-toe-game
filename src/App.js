@@ -2,15 +2,18 @@ import React, { Component } from 'react';
 import './App.css';
 
 import Inputs from './components/Inputs';
+import Alert from './components/Alert';
 
 class App extends Component {
   constructor() {
     super();
-    this.state={
+
+    this.state = {
       currentText: 'O',
       values: ['','','','','','','','',''],
       winner: undefined
-    }
+    };
+
     this.winningPatterns = [
       '036',
       '147',
@@ -113,14 +116,6 @@ class App extends Component {
     }
     target.className = 'active'; 
   }
-}
-
-
-const Alert = (props) => {
-  const alert = props.winner ? "The Winner Is: " + props.winner : "It is " + props.currentText + "'s turn.";
-  return (
-    <header>{alert}</header>
-  );
 }
 
 export default App;
