@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
 import './App.css';
+
+import Inputs from './components/Inputs';
 
 class App extends Component {
   constructor() {
@@ -114,19 +115,6 @@ class App extends Component {
   }
 }
 
-const Inputs = (props) => {
-  let inputs = [];
-  for (let i=0; i < 9; i++) {
-    inputs.push(<li key={i} name='hello' onClick={(e)=>props.onClick(e, i)} >{props.values[i]}</li>)
-  }
-  return (
-    <article>
-      <ul className="container">
-        {inputs}
-      </ul>
-    </article>
-  );
-}
 
 const Alert = (props) => {
   const alert = props.winner ? "The Winner Is: " + props.winner : "It is " + props.currentText + "'s turn.";
