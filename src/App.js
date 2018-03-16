@@ -27,8 +27,18 @@ class App extends Component {
       <section className="App">
         <Alert winner={this.state.winner} currentText={this.state.currentText}></Alert>
         <Inputs onClick={(e, i) => this.handleInput(e, i)} currentText={this.state.currentText} values={this.state.values}></Inputs>
+        <button onClick={this.reset.bind(this)}>Replay!</button>
       </section>
     );
+  }
+
+  reset() {
+    document.querySelector('.active').classList.remove('active');
+    this.setState({
+      currentText: 'O',
+      values: ['','','','','','','','',''],
+      winner: undefined
+    });
   }
 
   handleInput(e, i) {
