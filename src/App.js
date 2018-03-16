@@ -11,14 +11,14 @@ class App extends Component {
       winner: undefined
     }
     this.winningPatterns = [
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 4, 8],
-      [2, 4, 6]
+      '036',
+      '147',
+      '258',
+      '012',
+      '345',
+      '678',
+      '048',
+      '246'
     ];
   }
 
@@ -69,8 +69,7 @@ class App extends Component {
     const curXstr = curXs.sort().join('');
     const curOstr = curOs.sort().join('');
 
-    for (const pattern of this.winningPatterns) {
-      const str = pattern.join('');
+    for (const str of this.winningPatterns) {
       if (curXstr.indexOf(str) > -1) {
         this.setState({winner: 'X'});
         break;
