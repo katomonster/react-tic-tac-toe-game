@@ -4,8 +4,9 @@ import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
+Enzyme.configure({ adapter: new Adapter() });
+
 test('Loads Input component', () => {
-	Enzyme.configure({ adapter: new Adapter() });
 	const currentText = 'X';
 	const values = ['X','O','X','O','X','O','X','O','X']
 
@@ -15,28 +16,36 @@ test('Loads Input component', () => {
 
 	const li = wrapper.find('.container li').at(0);
 
-	expect(li.text()).toBe("X");
+	expect(li.text()).toBe('X');
 
 });
 
 test('Loads Winner in Alert component', () => {
-	Enzyme.configure({ adapter: new Adapter() });
-
-	const winner = "X";
+	const winner = 'X';
 
 	const wrapper = mount(
 		<Alert winner={winner} />
 	);
+
 	expect(wrapper.text()).toBe('The Winner Is: X');
 });
 
-test('Loads current player in Alert component', () => {
-	Enzyme.configure({ adapter: new Adapter() });
-
-	const currentText = "X";
+test('Loads current player X in Alert component', () => {
+	const currentText = 'X';
 
 	const wrapper = mount(
 		<Alert currentText={currentText} />
 	);
+
 	expect(wrapper.text()).toBe('It is X\'s turn.');
+});
+
+test('Loads current player O in Alert component', () => {
+	const currentText = 'O';
+
+	const wrapper = mount(
+		<Alert currentText={currentText} />
+	);
+
+	expect(wrapper.text()).toBe('It is O\'s turn.');
 });
