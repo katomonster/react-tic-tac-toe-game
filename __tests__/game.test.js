@@ -3,6 +3,7 @@ import Alert from '../src/components/Alert';
 import React from 'react';
 import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import assert from 'assert';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -47,5 +48,6 @@ test('Loads current player O in Alert component', () => {
 		<Alert currentText={currentText} />
 	);
 
-	expect(wrapper.text()).toBe('It is O\'s turn.');
+	//expect(wrapper.text()).toBe('It is O\'s turn.');
+	assert(wrapper.text() === 'It is O\'s turn.');
 });

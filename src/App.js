@@ -3,16 +3,19 @@ import './App.css';
 
 import Inputs from './components/Inputs';
 import Alert from './components/Alert';
+import { setWinner, resetState, setInputValues } from './state-functions';
 
 class App extends Component {
   constructor() {
     super();
 
-    this.state = {
+    this.defaultState = {
       currentText: 'O',
       values: ['','','','','','','','',''],
       winner: undefined
     };
+
+    this.state = this.defaultState;
 
     this.winningPatterns = [
       '036',
@@ -41,11 +44,7 @@ class App extends Component {
     document.querySelectorAll('.winner').forEach((winner) => {
       winner.classList.remove('winner');
     });
-    this.setState({
-      currentText: 'O',
-      values: ['','','','','','','','',''],
-      winner: undefined
-    });
+    this.setState(resetState(this.defaultState));
   }
 
   handleInput(e, i) {
@@ -57,10 +56,10 @@ class App extends Component {
 
     this.handleClass(e.target);
 
-    this.setState({
+    this.setState(setInputValues(this.state, {
       values: newValues,
       currentText: newText
-    });
+    }));
 
     this.checkWinner(newValues);
   }
@@ -79,11 +78,11 @@ class App extends Component {
 
     for (const str of this.winningPatterns) {
       if (curXstr.indexOf(str) > -1) {
-        this.setState({winner: 'X'});
+        this.setState(setWinner('X'));
         winningPattern = str;
         break;
       } else if (curOstr.indexOf(str) > -1) {
-        this.setState({winner: 'O'});
+        this.setState(setWinner('O'));
         winningPattern = str;
         break;
       }
