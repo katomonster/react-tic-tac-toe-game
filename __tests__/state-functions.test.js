@@ -25,9 +25,7 @@ describe('#setInputValues', () => {
         const curState = { foo: 'bar'};
         expect(setInputValues(curState, { foo: 'baz'})).toEqual({foo: 'baz'});
     });
-});
 
-describe('#setInputValues', () => {
     it('sets new values when player inputs', () => {
         const curState = { foo: 'bar', bar: 'bar'};
         expect(setInputValues(curState, { foo: 'baz'})).toEqual({foo: 'baz', bar: 'bar'});
