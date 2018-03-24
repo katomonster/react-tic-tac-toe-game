@@ -1,4 +1,4 @@
-import { setWinner, resetState, setInputValues } from '../src/state-functions';
+import { setWinner, resetState, updateStateValues, setNewHistory } from '../src/state-functions';
 
 describe('Addition', () => {
     it('knows that 2 and 2 make 4', () => {
@@ -20,14 +20,22 @@ describe('#resetState', () => {
     });
 });
 
-describe('#setInputValues', () => {
+describe('#updateStateValues', () => {
     it('sets new values when player inputs', () => {
         const curState = { foo: 'bar'};
-        expect(setInputValues(curState, { foo: 'baz'})).toEqual({foo: 'baz'});
+        expect(updateStateValues(curState, { foo: 'baz'})).toEqual({foo: 'baz'});
     });
 
     it('sets new values when player inputs', () => {
         const curState = { foo: 'bar', bar: 'bar'};
-        expect(setInputValues(curState, { foo: 'baz'})).toEqual({foo: 'baz', bar: 'bar'});
+        expect(updateStateValues(curState, { foo: 'baz'})).toEqual({foo: 'baz', bar: 'bar'});
+    });
+});
+
+describe('#setNewHistory', () => {
+    it('sets new history values as players play', () => {
+        const curHistory = [['O', 'X']];
+        const newValues = ['X', 'O'];
+        expect(setNewHistory(curHistory, newValues)).toEqual([['O','X'], ['X', 'O']]);
     });
 });

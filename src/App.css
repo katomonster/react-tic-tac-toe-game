@@ -27,6 +27,13 @@ button {
   cursor: pointer;
 }
 
+.hide { display: none; }
+
+.reset-button {
+  background: orange;
+  color: #fff;
+}
+
 .container {
   list-style: none;
   width: inherit;

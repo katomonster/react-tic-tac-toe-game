@@ -3,19 +3,18 @@ import './App.css';
 
 import Inputs from './components/Inputs';
 import Alert from './components/Alert';
-import { setWinner, resetState, setInputValues } from './state-functions';
+import History from './components/History';
+import {
+  setWinner,
+  resetState,
+  updateStateValues,
+  setNewHistory, defaultState} from './state-functions';
 
 class App extends Component {
   constructor() {
     super();
 
-    this.defaultState = {
-      currentText: 'O',
-      values: ['','','','','','','','',''],
-      winner: undefined
-    };
-
-    this.state = this.defaultState;
+    this.state = defaultState();
 
     this.winningPatterns = [
       '036',
@@ -34,17 +33,28 @@ class App extends Component {
       <section className="App">
         <Alert winner={this.state.winner} currentText={this.state.currentText}></Alert>
         <Inputs onClick={(e, i) => this.handleInput(e, i)} currentText={this.state.currentText} values={this.state.values}></Inputs>
-        <button onClick={this.reset.bind(this)}>Replay!</button>
+        <aside>
+          <button onClick={this.reset.bind(this)} className={this.state.winner || this.state.gameover ? 'reset-button' : 'hide'}>Replay!</button>
+          <History history={this.state.history} onClick={(i) => this.goBack(i)}></History>
+        </aside>
       </section>
     );
   }
 
   reset() {
-    document.querySelector('.active').classList.remove('active');
+    console.log('default state; ',defaultState())
+    console.log('before',this.state.values);
+    this.resetClasses();
+    this.setState(resetState(defaultState()));
+
+    setTimeout(function() {console.log('after',this.state.values);}.bind(this), 100);
+  }
+
+  resetClasses() {
+    if (document.querySelector('.active')) document.querySelector('.active').classList.remove('active');
     document.querySelectorAll('.winner').forEach((winner) => {
       winner.classList.remove('winner');
     });
-    this.setState(resetState(this.defaultState));
   }
 
   handleInput(e, i) {
@@ -54,11 +64,15 @@ class App extends Component {
     
     const newText = this.getNewText(i);
 
+    const newHistory = setNewHistory(this.state.history, newValues);
+    //console.log(newHistory)
+
     this.handleClass(e.target);
 
-    this.setState(setInputValues(this.state, {
+    this.setState(updateStateValues(this.state, {
       values: newValues,
-      currentText: newText
+      currentText: newText,
+      history: newHistory
     }));
 
     this.checkWinner(newValues);
@@ -90,12 +104,15 @@ class App extends Component {
 
     if (winningPattern) {
       const indices = new Set( winningPattern.split('') );
-      console.log(indices);
       document.querySelectorAll('.container li').forEach((li, i) => {
         if (indices.has(i.toString())) {
           li.classList.add('winner');
         }
       });
+    }
+
+    if (newValues.indexOf('') === -1) {
+      this.setState(updateStateValues({gameover: true}))
     }
   }
 
@@ -114,6 +131,14 @@ class App extends Component {
       target.parentNode.querySelector('.active').classList.remove('active');
     }
     target.className = 'active'; 
+  }
+
+  goBack(i) {
+    this.setState(updateStateValues({
+      values: this.state.history[i-1],
+      history: this.state.history.slice(0, i)
+    }));
+    this.resetClasses();
   }
 }
 
