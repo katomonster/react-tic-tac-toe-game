@@ -1,4 +1,4 @@
-import { setWinner, resetState, updateStateValues, setNewHistory } from '../src/state-functions';
+import { setWinner, resetState, updateStateValues, setNewHistory, defaultState } from '../src/state-functions';
 
 describe('Addition', () => {
     it('knows that 2 and 2 make 4', () => {
@@ -37,5 +37,18 @@ describe('#setNewHistory', () => {
         const curHistory = [['O', 'X']];
         const newValues = ['X', 'O'];
         expect(setNewHistory(curHistory, newValues)).toEqual([['O','X'], ['X', 'O']]);
+    });
+});
+
+describe('#defaultState', () => {
+    const defaultValues = Array(9).fill('');
+    it('sets values to default state', () => {
+        expect(defaultState()).toEqual({
+            currentText: 'O',
+            values: defaultValues,
+            winner: null,
+            history: [],
+            gameover: false
+        });
     });
 });
